@@ -1,0 +1,83 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<script src="jquery-3.1.1.min.js">
+</script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $("form").submit(function(e){
+        e.preventDefault();
+        $("#message-box div").remove();
+         $.get("return.php?bid="+$(".form-control").val(), function(data, status){
+            if(data==""){
+              $("#message-box").append("<div class=\"alert alert-danger\"> <strong> Error! </strong>Unable to complete operation</div>");
+            }else{
+              $("#message-box").append("<div class=\"alert alert-success\"> <strong> Success! </strong>Book has been returned , Fine Amount : <strong>"+data+"</strong></div>");
+            }
+         });
+      });
+  });
+</script>
+<style>
+
+</style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+   <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">Library Management System</a>
+   </div>
+    <ul class="nav navbar-nav">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="checkout.html">Check Out</a></li>
+      <li  class="active"><a href="checkin.html">Check In</a></li>
+      <li><a href="search_books.html">Search Books</a></li>
+      <li><a href="issuehistory.html">Issue history</a></li>
+      <li><a href="search_students.html">Search students</a></li>	       
+      <li><a href="search_staff.html">Search staff</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="container" id="searchBox">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h1>Book Return</h1>
+            </div>
+           
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12" id="issue">
+            <h3>For book returns, enter the book id</h3>
+        </div>
+    </div>
+   
+    <form class="form-horizontal">
+  <div class="form-group">
+    
+  <div class="form-group">
+    <label class="control-label col-sm-4" for="book_id">Book id</label>
+    <div class="col-sm-4"> 
+      <input type="number" class="form-control" id="book_id" placeholder="Book id">
+    </div>
+  </div>
+  
+  <div class="form-group"> 
+    <div class="col-sm-offset-4 col-sm-10">
+      <button type="submit" class="btn btn-default">Return book</button>
+    </div>
+  </div>
+</form>
+   <div id="message-box"></div>
+    </div>
+
+</body>
+</html>

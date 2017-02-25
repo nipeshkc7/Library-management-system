@@ -1,0 +1,21 @@
+body {
+    background-image: url('libraries.jpg');
+    background-size: cover;
+}
+#searchBox{
+	padding-left:40px;
+	padding-right:40px;
+	background-color: #eeeeee;
+}
+#search{
+	margin-bottom:20px;
+	margin-top:15px;
+}
+
+#issue{
+	margin-bottom:40px;
+}
+.form-horizontal{
+	margin-bottom: 30px;
+
+}

@@ -1,0 +1,102 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<script src="jquery-3.1.1.min.js">
+</script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+
+<script >
+
+$(document).ready(function(){
+    $("form").submit(function(e){
+        e.preventDefault();
+        $("#message-box div").remove();
+        $.get("issue.php?sid="+$("#student_id").val()+"&&bid="+$("#book_id").val(), function(data, status){
+
+              if(data=="ERROR1"){
+                  $("#message-box").append("<div class=\"alert alert-danger\"><strong> ERROR ! </strong> Unable to update the database</div>");
+              }
+              else if (data=="ERROR2"){             
+                $("#message-box").append("<div class=\"alert alert-danger\"><strong> ERROR ! </strong> Student has exceeded the book withdrawl limit</div>");
+              }else if (data=="NA"){
+                
+                $("#message-box").append("<div class=\"alert alert-danger\"><strong> ERROR ! </strong> Book not available</div>");
+              }
+              else{
+                var obj = jQuery.parseJSON(data);
+                console.log(obj.BookName);
+               //  for (var i = 0; i < obj.length; i++) {                
+                $("#message-box").append("<div class=\"alert alert-success\"> <strong>SUCCESS !</strong> "+obj.BookName+" was issued to "+obj.student_name+" on Date: "+obj.issue_date+ " ISSUE ID: "+ obj.issue_id+"</div>");
+
+               // }
+
+              }
+        });
+
+    });
+});
+</script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+   <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">Library Management System</a>
+   </div>
+    <ul class="nav navbar-nav">
+      <li><a href="index.html">Home</a></li>
+      <li class="active"><a href="checkout.html">Check Out</a></li>
+      <li><a href="checkin.html">Check In</a></li>
+      <li><a href="search_books.html">Search Books</a></li>
+      <li><a href="issuehistory.html">Issue history</a></li>
+      <li><a href="search_students.html">Search students</a></li>	       
+      <li><a href="search_staff.html">Search staff</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="container" id="searchBox">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h1>Issue a book</h1>
+            </div>
+           
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12" id="issue">
+            <h3>To issue a book enter book id and student id</h3>
+        </div>
+    </div>
+   
+    <form class="form-horizontal">
+  <div class="form-group">
+    <label class="control-label col-sm-4" for="student_id">Student id</label>
+    <div class="col-sm-4">
+      <input type="number" class="form-control" id="student_id" placeholder="Student id" required>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="control-label col-sm-4" for="book_id">Book id</label>
+    <div class="col-sm-4"> 
+      <input type="number" class="form-control" id="book_id" placeholder="Book id" required>
+    </div>
+  </div>
+  
+  <div class="form-group"> 
+    <div class="col-sm-offset-4 col-sm-10">
+      <button type="submit" class="btn btn-default">Issue book</button>
+    </div>
+  </div>
+</form>
+<div id="message-box"></div>
+
+    </div>
+
+</body>
+</html>

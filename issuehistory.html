@@ -1,0 +1,109 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style.css">
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<script src="jquery-3.1.1.min.js">
+</script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<script>
+
+$(document).ready(function(){
+
+$.get("issue_history.php?id=", function(data, status){
+        var obj = jQuery.parseJSON(data);
+
+        for (var i = 0; i < obj.length; i++) {
+           console.log(obj[i]);
+           $(".table").append("<tr><td>" + obj[i].issue_id + "</td><td>" + obj[i].book_id + "</td><td>" + obj[i].BookName + "</td>"+"<td>" + obj[i].student_name + "</td><td>" + obj[i].dep_name + "</td>"+ "<td>"+obj[i].issue_date + "</td>"+"<td>"+ obj[i].return_date + "</td></tr>");
+          }
+    });
+
+$("#search").keypress(function(event){
+  if(event.which==13){
+$.get("issue_history.php?id="+$(".form-control").val(), function(data, status){
+        var obj = jQuery.parseJSON(data);
+        $(".table tbody tr").remove();
+        if(obj.length==0){
+          $(".table").append("<tr><td>No results</td></tr>");
+        }else{
+        for (var i = 0; i < obj.length; i++) {
+           console.log(obj[i]);
+          $(".table").append("<tr><td>" + obj[i].issue_id + "</td><td>" + obj[i].book_id + "</td><td>" + obj[i].BookName + "</td>"+"<td>" + obj[i].student_name + "</td><td>" + obj[i].dep_name + "</td>"+ "<td>"+obj[i].issue_date + "</td>"+"<td>"+ obj[i].return_date + "</td></tr>");
+          }
+        }
+
+    });
+  }
+});
+
+});
+</script>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+   <div class="navbar-header">
+      <a class="navbar-brand" href="index.html">Library Management System</a>
+   </div>
+    <ul class="nav navbar-nav">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="checkout.html">Check Out</a></li>
+      <li><a href="checkin.html">Check In</a></li>
+      <li><a href="search_books.html">Search Books</a></li>
+      <li class="active"><a href="issuehistory.html">Issue history</a></li>
+      <li><a href="search_students.html">Search students</a></li>	       
+      <li><a href="search_staff.html">Search staff</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="container" id="searchBox">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h1>Issue history</h1>
+            </div>
+           
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>search by book id</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4 col-lg-offset-4" id="search">
+            <input type="number" id="search" value="" class="form-control" placeholder="Book id">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-striped table-hover" id="table">
+                <thead>
+                    <tr>
+                        <th>Issue id</th>
+                        <th>Book id</th>
+                        <th>Book name</th>
+                        <th>Issued by</th>
+                        <th>Department</th>
+                        <th>Issue date</th>
+                        <th>Return date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  
+                    
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+   
+    </div>
+
+</body>
+</html>
